@@ -87,8 +87,8 @@ label {
  * I want my pure-button elements to look a little different
  */
 .pure-button {
-    background-color: #89ab39;
-    color: white;
+    background-color: black ;
+    color: red;
     padding: 0.5em 2em;
     border-radius: 5px;
 }
@@ -288,6 +288,7 @@ a.pure-button-primary {
         font-size: 300%;
     }
 }
+
 .headroom {position: fixed;top: 0;left: 0;right: 0;transition: all .2s ease-in-out;}
 .headroom--unpinned {top: -100px;}
 .headroom--pinned {top: 0;}
