@@ -1,3 +1,9 @@
+<%@page import="java.util.Comparator"%>
+<%@page import="java.util.Collections"%>
+<%@page import="model.Player"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.TreeSet"%>
+<%@page import="java.util.HashMap"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -18,6 +24,8 @@
         <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
 
         <link rel="stylesheet" href="css/animation/animations.css">
+        
+        <link rel="shortcut icon"  type="image/x-icon" href="img/common/favicon.ico" >
 
 		
     </head>
@@ -34,8 +42,43 @@
         </div>
     </div>
 
+	<%! 
+	private ArrayList<Player> leaderboard=new ArrayList<Player>();
+	private HashMap<String,Player> leadermap=new HashMap<String,Player>();
+    public void jspInit()	
+	{
+		leaderboard.add(new Player("kaushal","bondada"));
+		leadermap.put(leaderboard.get(0).getFirstName()+leaderboard.get(0).getLastName(),leaderboard.get(0));
+		leaderboard.add(new Player("Tegjyot","singh"));
+		leadermap.put(leaderboard.get(1).getFirstName()+leaderboard.get(1).getLastName(),leaderboard.get(1));
+		leaderboard.add(new Player("manoj","tammali"));
+		leadermap.put(leaderboard.get(2).getFirstName()+leaderboard.get(2).getLastName(),leaderboard.get(2));
+		leaderboard.add(new Player("venkatesh","javvaji"));
+		leadermap.put(leaderboard.get(3).getFirstName()+leaderboard.get(3).getLastName(),leaderboard.get(3));
+		leaderboard.add(new Player("abhishek","soni"));
+		leadermap.put(leaderboard.get(4).getFirstName()+leaderboard.get(4).getLastName(),leaderboard.get(4));
+		leaderboard.add(new Player("abhishake","sharma"));
+		leadermap.put(leaderboard.get(5).getFirstName()+leaderboard.get(5).getLastName(),leaderboard.get(5));
+		leaderboard.add(new Player("dilip","sitala"));
+		leadermap.put(leaderboard.get(6).getFirstName()+leaderboard.get(6).getLastName(),leaderboard.get(6));
+		leaderboard.add(new Player("veenanadh","stgk"));
+		leadermap.put(leaderboard.get(7).getFirstName()+leaderboard.get(7).getLastName(),leaderboard.get(7));
+		leaderboard.add(new Player("abhinav","agarwal"));
+		leadermap.put(leaderboard.get(8).getFirstName()+leaderboard.get(0).getLastName(),leaderboard.get(8));
+		leaderboard.add(new Player("sagar","harendra"));
+		leadermap.put(leaderboard.get(9).getFirstName()+leaderboard.get(9).getLastName(),leaderboard.get(9));
+	}
+	%>
+	<%
+	ArrayList<Player> leaderboardapp=(ArrayList<Player>) application.getAttribute("leaderboard");
+	if(leaderboardapp==null)	
+	{
+		leaderboardapp=this.leaderboard;	
+		application.setAttribute("leaderboard",leaderboardapp);
+		application.setAttribute("leadermap",leadermap);
+	}
+	%>
 
-        
 	<script src="headroom.js"></script>
 	<script>
 	var myElement = document.getElementById("header");
@@ -46,11 +89,12 @@
 
     <div class="splash-container">
         <div class="splash">
-            <h1 class="splash-head floating" style="font-size:80px;font-family:troikaregular;">HangMan</h1> 
+            <div class="splash-head floating" style="font-size:150px;font-family:troikaregular;">HangMan</div> 
             <p class="splash-subhead">
+            	<br>
                	"A vocabulary game which brings an inner Sherlock in you" 
             </p>
-               <a href="#content-wrapper" class="pure-button pure-button-primary">Get Started</a>
+               <a href="#content-wrapper" class="pure-button pure-button-primary"><div style="font-size:30px">Get Started</div></a>
             <p>
             </p>
         </div>
@@ -59,7 +103,7 @@
     <div class="content-wrapper" id="content-wrapper">
         <div class="content">
             <h2 class="content-head is-center"><i class="fa fa-cogs" style="font-size:40px">&nbsp;</i>Game-Setting</h2>
-         <form class="pure-form pure-form-stacked" action="GamesScreen.jsp" method="get">                                                                                                              
+         <form class="pure-form pure-form-stacked" action="GameServlet" method="get">                                                                                                              
             <div class="pure-g">
                 <div class="l-box pure-u-1 pure-u-lg-1-3">
 
@@ -89,10 +133,10 @@
                 <div class="l-box pure-u-1 pure-u-lg-1-3">
                     
                 <p>
-                   <br \>
-                   <br \>
+                   <br />
+                   <br />
                    <div class="is-center"><button type="submit" class="pure-button pure-button-primary"><i style="font-size:30px" class="fa fa-power-off">&nbsp;&nbsp;Play Now</i></button></div>
-                   <br \>
+                   <br />
                    <div class="is-center"><a href="#leaderboard" class="pure-button pure-button-primary"><i style="font-size:30px" class="fa fa-flag-checkered">&nbsp;&nbsp;LeaderBoard</i></a></div>
                 </p>
                 </div>
@@ -110,81 +154,89 @@
                     <th>LastName</th>
                     <th>Moves</th>
                     <th>Score</th>
-                    <th>Difficulty</th>
                 </tr>
             </thead>
             <tbody>
                 <tr class="pure-table-odd">
                     <td>1</td>
-                    <td>Honda</td>
-                    <td>Accord</td>
-                    <td>2009</td>
-                    <td>2009</td>
-                    <td>2009</td>
+                    <td><%=leaderboardapp.get(0).getFirstName() %></td>
+                    <td><%=leaderboardapp.get(0).getLastName() %></td>
+                    <td><%=leaderboardapp.get(0).getChancesTaken() %></td>
+                    <td><%=leaderboardapp.get(0).getScore()%></td>
                 </tr>
 
                 <tr>
                     <td>2</td>
-                    <td>Toyota</td>
-                    <td>Camry</td>
-                    <td>2012</td>
-                    <td>2012</td>
-                    <td>2012</td>
+                    <td><%=leaderboardapp.get(1).getFirstName() %></td>
+                    <td><%=leaderboardapp.get(1).getLastName()%></td>
+                    <td><%=leaderboardapp.get(1).getChancesTaken()%></td>
+                    <td><%=leaderboardapp.get(1).getScore()%></td>
                 </tr>
 
                 <tr class="pure-table-odd">
                     <td>3</td>
-                    <td>Hyundai</td>
-                    <td>Elantra</td>
-                    <td>2010</td>
-                    <td>2010</td>
-                    <td>2010</td>
+                    <td><%=leaderboardapp.get(2).getFirstName() %></td>
+                    <td><%=leaderboardapp.get(2).getLastName()%></td>
+                    <td><%=leaderboardapp.get(2).getChancesTaken()%></td>
+                    <td><%=leaderboardapp.get(2).getScore()%></td>
                 </tr>
 
                 <tr>
                     <td>4</td>
-                    <td>Ford</td>
-                    <td>Focus</td>
-                    <td>2008</td>
-                    <td>2008</td>
-                    <td>2008</td>
+                    <td><%=leaderboardapp.get(3).getFirstName() %></td>
+                    <td><%=leaderboardapp.get(3).getLastName()%></td>
+                    <td><%=leaderboardapp.get(3).getChancesTaken()%></td>
+                    <td><%=leaderboardapp.get(3).getScore()%></td>
                 </tr>
 
                 <tr class="pure-table-odd">
                     <td>5</td>
-                    <td>Nissan</td>
-                    <td>Sentra</td>
-                    <td>2011</td>
-                    <td>2011</td>
-                    <td>2011</td>
+                    <td><%=leaderboardapp.get(4).getFirstName() %></td>
+                    <td><%=leaderboardapp.get(4).getLastName()%></td>
+                    <td><%=leaderboardapp.get(4).getChancesTaken()%></td>
+                    <td><%=leaderboardapp.get(4).getScore()%></td>
                 </tr>
 
                 <tr>
                     <td>6</td>
-                    <td>BMW</td>
-                    <td>M3</td>
-                    <td>2009</td>
-                    <td>2009</td>
-                    <td>2009</td>
+                    <td><%=leaderboardapp.get(5).getFirstName() %></td>
+                    <td><%=leaderboardapp.get(5).getLastName()%></td>
+                    <td><%=leaderboardapp.get(5).getChancesTaken()%></td>
+                    <td><%=leaderboardapp.get(5).getScore()%></td>
                 </tr>
 
                 <tr class="pure-table-odd">
                     <td>7</td>
-                    <td>Honda</td>
-                    <td>Civic</td>
-                    <td>2010</td>
-                    <td>2010</td>
-                    <td>2010</td>
+                    <td><%=leaderboardapp.get(6).getFirstName() %></td>
+                    <td><%=leaderboardapp.get(6).getLastName()%></td>
+                    <td><%=leaderboardapp.get(6).getChancesTaken()%></td>
+                    <td><%=leaderboardapp.get(6).getScore()%></td>
                 </tr>
 
                 <tr>
                     <td>8</td>
-                    <td>Kia</td>
-                    <td>Soul</td>
-                    <td>2010</td>
-                    <td>2010</td>
-                    <td>2010</td>
+                    <td><%=leaderboardapp.get(7).getFirstName() %></td>
+                    <td><%=leaderboardapp.get(7).getLastName()%></td>
+                    <td><%=leaderboardapp.get(7).getChancesTaken()%></td>
+                    <td><%=leaderboardapp.get(7).getScore()%></td>
                 </tr>
+
+                <tr>
+                    <td>9</td>
+                    <td><%=leaderboardapp.get(8).getFirstName() %></td>
+                    <td><%=leaderboardapp.get(8).getLastName()%></td>
+                    <td><%=leaderboardapp.get(8).getChancesTaken()%></td>
+                    <td><%=leaderboardapp.get(8).getScore()%></td>
+                </tr>
+ 
+                <tr>
+                    <td>10</td>
+                    <td><%=leaderboardapp.get(9).getFirstName() %></td>
+                    <td><%=leaderboardapp.get(9).getLastName()%></td>
+                    <td><%=leaderboardapp.get(9).getChancesTaken()%></td>
+                    <td><%=leaderboardapp.get(9).getScore()%></td>
+                </tr>
+ 
             </tbody>
         </table>
                 

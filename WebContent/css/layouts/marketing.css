@@ -87,15 +87,15 @@ label {
  * I want my pure-button elements to look a little different
  */
 .pure-button {
-    background-color: black ;
-    color: red;
+    background-color: #9a40bf ;
+    color: white;
     padding: 0.5em 2em;
     border-radius: 5px;
 }
 
 a.pure-button-primary {
-    background: black;
-    color: red;
+    background: #9a40bf;
+    color: white;
     border-radius: 5px;
     font-size: 120%;
 }
@@ -138,7 +138,7 @@ a.pure-button-primary {
 .home-menu li a:focus {
     background: none;
     border: none;
-    color: red;
+    color: #9a40bf;
 }
 
 
@@ -148,7 +148,7 @@ a.pure-button-primary {
  */
 
 .splash-container {
-	background-image: url("../../img/common/greenbg.jpg");
+	background-image: url("../../img/common/homescreenbg.jpg");
 	background-size: 100% 100%;
     z-index: 1;
     overflow: hidden;
@@ -166,8 +166,9 @@ a.pure-button-primary {
     height: 50%;
     margin: auto;
     position: absolute;
-    top: 5px; left: 0; bottom: 0; right: 0;
+    top: 120px; left: -120mm; bottom: 0; right: 0;
     text-align: center;
+	
 }
 
 /* This is the main heading that appears on the blue section */
@@ -180,8 +181,10 @@ a.pure-button-primary {
 
 /* This is the subheading that appears on the blue section */
 .splash-subhead {
+    font-size: 35px;
     color: white;
     letter-spacing: 0.05em;
+    line-height: 45px;
     opacity: 1;
 }
 
