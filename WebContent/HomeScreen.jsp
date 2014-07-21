@@ -112,11 +112,11 @@
                        	Enter Details 
                     </h2>
                          <label for="firstname">Your First Name</label>                                                                                                             
-                         <input name="firstname" type="text" placeholder="Your First Name">                                                                                           
+                         <input name="firstname" style="outline-color:#9a40bf" type="text" placeholder="Your First Name">                                                                                           
                                                                                                                                                                          
                                                                                                                                                                          
                          <label for="lastname">Your Last Name</label>                                                                                                           
-                         <input name="lastname" type="text" placeholder="Your Last Name">    
+                         <input name="lastname"  style="outline-color:#9a40bf" type="text" placeholder="Your Last Name">    
                 </div>
                 <div class="l-box pure-u-1 pure-u-lg-1-3">
                     <h2 class="content-subhead">

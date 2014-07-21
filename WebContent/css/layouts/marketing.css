@@ -10,7 +10,7 @@
  */
 body {
     line-height: 1.7em;
-    color: #7f8c8d;
+    color: #9a40bf;
     font-size: 13px;
 }
 
@@ -188,6 +188,128 @@ a.pure-button-primary {
     opacity: 1;
 }
 
+/* This is the css for the game screen part of the code*/
+
+.splash-container1 {
+	background-image: url("../../img/common/gamescreenbg.jpg");
+	background-size: 100% 100%;
+    z-index: 1;
+    overflow: hidden;
+    /* The following styles are required for the "scroll-over" effect */
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: fixed !important;
+}
+
+.splash1 {
+    /* absolute center .splash within .splash-container */
+    width: 80%;
+    height: 50%;
+    position: relative;
+    top: 10%; left: 10%; bottom: 0; right: 0;
+    text-align: center;
+	
+}
+ 
+
+.splash-head1 {
+    font-size: 80px;
+    font-weight: bold;
+    color: white;
+    font-weight: 100;
+}
+
+.button-pos1 {
+	position:relative; 
+	top:10%;
+}
+
+/* cube animation in the game screen */
+
+@-webkit-keyframes spincube {
+    from,to  { -webkit-transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
+    16%      { -webkit-transform: rotateY(-90deg);                           }
+    33%      { -webkit-transform: rotateY(-90deg) rotateZ(90deg);            }
+    50%      { -webkit-transform: rotateY(-180deg) rotateZ(90deg);           }
+    66%      { -webkit-transform: rotateY(-270deg) rotateX(90deg);           }
+    83%      { -webkit-transform: rotateX(90deg);                            }
+  }@keyframes spincube {
+    from,to {
+      -moz-transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+      -ms-transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+      transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+    }
+    16% {
+      -moz-transform: rotateY(-90deg);
+      -ms-transform: rotateY(-90deg);
+      transform: rotateY(-90deg);
+    }
+    33% {
+      -moz-transform: rotateY(-90deg) rotateZ(90deg);
+      -ms-transform: rotateY(-90deg) rotateZ(90deg);
+      transform: rotateY(-90deg) rotateZ(90deg);
+    }
+    50% {
+      -moz-transform: rotateY(-180deg) rotateZ(90deg);
+      -ms-transform: rotateY(-180deg) rotateZ(90deg);
+      transform: rotateY(-180deg) rotateZ(90deg);
+    }
+    66% {
+      -moz-transform: rotateY(-270deg) rotateX(90deg);
+      -ms-transform: rotateY(-270deg) rotateX(90deg);
+      transform: rotateY(-270deg) rotateX(90deg);
+    }
+    83% {
+      -moz-transform: rotateX(90deg);
+      -ms-transform: rotateX(90deg);
+      transform: rotateX(90deg);
+    }
+    
+  }.cubespinner{-webkit-animation-name:spincube;
+      -webkit-animation-timing-function:ease-in-out;
+      -webkit-animation-iteration-count:infinite;
+      -webkit-animation-duration:12s;
+      animation-name:spincube;
+      animation-timing-function:ease-in-out;
+      animation-iteration-count:infinite;
+      animation-duration:12s;
+      -webkit-transform-style:preserve-3d;
+      -moz-transform-style:preserve-3d;
+      -ms-transform-style:preserve-3d;
+      transform-style:preserve-3d;
+      -webkit-transform-origin:160px 160px 0;
+      -moz-transform-origin:160px 160px 0;
+      -ms-transform-origin:160px 160px 0;
+      transform-origin:160px 160px 0}.cubespinner div{position:absolute;
+      width:320px;
+      height:320px;
+      border:8px solid #ccc;
+      background:rgba(255,255,255,.8);
+      opacity: 0.8;
+      box-shadow:inset 0 0 100px rgba(0,0,0,.2);
+      text-align:center;
+      font-size:100px}.cubespinner .face1{-webkit-transform:translateZ(160px);
+      -moz-transform:translateZ(160px);
+      -ms-transform:translateZ(160px);
+      transform:translateZ(160px)}.cubespinner .face2{-webkit-transform:rotateY(90deg) translateZ(160px);
+      -moz-transform:rotateY(90deg) translateZ(160px);
+      -ms-transform:rotateY(90deg) translateZ(160px);
+      transform:rotateY(90deg) translateZ(160px)}.cubespinner .face3{-webkit-transform:rotateY(90deg) rotateX(90deg) translateZ(160px);
+      -moz-transform:rotateY(90deg) rotateX(90deg) translateZ(160px);
+      -ms-transform:rotateY(90deg) rotateX(90deg) translateZ(160px);
+      transform:rotateY(90deg) rotateX(90deg) translateZ(160px)}.cubespinner .face4{-webkit-transform:rotateY(180deg) rotateZ(90deg) translateZ(160px);
+      -moz-transform:rotateY(180deg) rotateZ(90deg) translateZ(160px);
+      -ms-transform:rotateY(180deg) rotateZ(90deg) translateZ(160px);
+      transform:rotateY(180deg) rotateZ(90deg) translateZ(160px)}.cubespinner .face5{-webkit-transform:rotateY(-90deg) rotateZ(90deg) translateZ(160px);
+      -moz-transform:rotateY(-90deg) rotateZ(90deg) translateZ(160px);
+      -ms-transform:rotateY(-90deg) rotateZ(90deg) translateZ(160px);
+      transform:rotateY(-90deg) rotateZ(90deg) translateZ(160px)}.cubespinner .face6{-webkit-transform:rotateX(-90deg) translateZ(160px);
+      -moz-transform:rotateX(-90deg) translateZ(160px);
+      -ms-transform:rotateX(-90deg) translateZ(160px);
+      transform:rotateX(-90deg) translateZ(160px)
+}
 /*
  * -- CONTENT STYLES --
  * This represents the content area (everything below the blue section)
@@ -213,9 +335,6 @@ a.pure-button-primary {
 }
 
 /* This is a modifier class used when the content-head is inside a ribbon */
-.content-head-ribbon {
-    color: white;
-}
 
 /* This is the class used for the content sub-headers (<h3>) */
 .content-subhead {

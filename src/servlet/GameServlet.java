@@ -3,8 +3,6 @@ package servlet;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -18,8 +16,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import org.apache.catalina.Session;
 
 import model.Player;
 
@@ -41,26 +37,30 @@ public class GameServlet extends HttpServlet {
 
 		try {
 		    String str;
-		    BufferedReader in = new BufferedReader(new FileReader("../input/easylist.txt"));
+		    BufferedReader in = new BufferedReader(new FileReader("/home/kaushal/Dropbox/workspace/HangMan/src/input/easylist.txt"));
 		    while ((str = in.readLine()) != null)
 		    {
 		    	easylist.add(str);
 		    }
 		    in.close();
+		    wordlist.put("easy", easylist);
 
-            in = new BufferedReader(new FileReader("../input/medium.txt"));
+            in = new BufferedReader(new FileReader("/home/kaushal/Dropbox/workspace/HangMan/src/input/mediumlist.txt"));
 		    while ((str = in.readLine()) != null)
 		    {
 		    	mediumlist.add(str);
 		    }
 		    in.close();
+		    wordlist.put("medium", mediumlist);
 
-		    in = new BufferedReader(new FileReader("../input/hardlist.txt"));
+		    in = new BufferedReader(new FileReader("/home/kaushal/Dropbox/workspace/HangMan/src/input/hardlist.txt"));
 		    while ((str = in.readLine()) != null)
 		    {
                 hardlist.add(str);
 		    }
 		    in.close();
+		    wordlist.put("hard",hardlist);
+
 		} 
 		catch (IOException e) 
 		{
@@ -103,11 +103,12 @@ public class GameServlet extends HttpServlet {
 		char[] dispword=new char[selword.length()];
 		for(int i=0;i<selword.length();i++)
 		{
+            System.out.println(difficulty); 
 			dispword[i]='_';
 		}
 		newentry.setWord(dispword);
 		current.setAttribute("Player",newentry);
-		response.sendRedirect("../../WebContent/GameScreen.js");
+		response.sendRedirect("GameScreen.jsp");
 	}
 
 	/**
@@ -116,7 +117,7 @@ public class GameServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		HttpSession current=request.getSession();
-		char guessedLetter=(char)request.getAttribute("guessedletter");
+		char guessedLetter=request.getParameter("guessedletter").toCharArray()[0];
 		char[] word=(char[]) current.getAttribute("word");
 		Player user=(Player) current.getAttribute("Player");
 		char[] disword=user.getWord();
@@ -134,7 +135,7 @@ public class GameServlet extends HttpServlet {
 			user.setWordsRevealed(user.getWordsRevealed()+noOfChar);
 			user.setWord(disword);
 			current.setAttribute("Player",user);
-			response.sendRedirect("../../GameScreen.jsp");
+			response.sendRedirect("GameScreen.jsp");
 		}
 		else
 		{
@@ -142,7 +143,7 @@ public class GameServlet extends HttpServlet {
 			{
 				user.setChancesTaken(user.getChancesTaken()+1);
 				current.setAttribute("Player", user);
-                response.sendRedirect("../../GameScreen.jsp");
+                response.sendRedirect("GameScreen.jsp");
 			}
 			else
 			{
