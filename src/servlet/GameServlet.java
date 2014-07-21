@@ -23,7 +23,8 @@ import model.Player;
  * Servlet implementation class GameServlet
  */
 @WebServlet(description = "the controller which controls intraction of servers in the game", urlPatterns = { "/GameServlet" })
-public class GameServlet extends HttpServlet {
+public class GameServlet extends HttpServlet 
+{
 	private static final long serialVersionUID = 1L;
 	private HashMap<String,ArrayList<String>> wordlist;
 
@@ -95,7 +96,7 @@ public class GameServlet extends HttpServlet {
 		String firstname=request.getParameter("firstname");
 		String lastname=request.getParameter("lastname");
 		String difficulty=request.getParameter("difficulty");
-		Player newentry=new Player(firstname, lastname);
+		Player newentry=new Player(firstname.toLowerCase(), lastname.toLowerCase());
 		HttpSession current=request.getSession();
         String selword=this.chooseRandom(difficulty);
 		current.setAttribute("word",selword.toCharArray());
@@ -117,66 +118,92 @@ public class GameServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		HttpSession current=request.getSession();
-		char guessedLetter=request.getParameter("guessedletter").toCharArray()[0];
+		char guessedLetter=request.getParameter("guessedletter").toLowerCase().toCharArray()[0];
+		System.out.println(guessedLetter);
 		char[] word=(char[]) current.getAttribute("word");
 		Player user=(Player) current.getAttribute("Player");
 		char[] disword=user.getWord();
 		String strword=new String(word);
-		if(strword.indexOf(guessedLetter)>0)
+		String dispstring=new String(disword);
+		System.out.println(dispstring);
+		System.out.println(strword);
+		System.out.println(strword.indexOf(guessedLetter));
+		if(strword.indexOf(guessedLetter)>=0) 
 		{
-			int noOfChar=0;
-			while(strword.indexOf(guessedLetter)>=0)
-			{
-				strword.replace(guessedLetter, '_');
-				int pos=strword.indexOf(guessedLetter);
-				disword[pos]=guessedLetter;
-				noOfChar++;
-			}
-			user.setWordsRevealed(user.getWordsRevealed()+noOfChar);
-			user.setWord(disword);
-			current.setAttribute("Player",user);
-			response.sendRedirect("GameScreen.jsp");
-		}
-		else
-		{
-			if(user.getChancesTaken()<10)
-			{
-				user.setChancesTaken(user.getChancesTaken()+1);
-				current.setAttribute("Player", user);
+			if(dispstring.indexOf(guessedLetter)==-1)
+            {
+                int noOfChar=0;
+                int inc=0;
+                while(inc<strword.length())
+                {
+                    if(strword.charAt(inc)==guessedLetter)
+                    {
+                        disword[inc]=guessedLetter;
+                        System.out.println("in "+new String(disword));
+                        noOfChar++;
+                    }
+                    inc++;
+                }
+                user.setWordsRevealed(user.getWordsRevealed()+noOfChar);
+                user.setWord(disword);
+                dispstring=new String(disword);
+                if(dispstring.indexOf('_')==-1)
+                {
+                    user.calculateScore();
+                    System.out.println("score"+user.getScore());
+                    ServletContext application=request.getServletContext();
+                    @SuppressWarnings("unchecked")
+                    ArrayList<Player> leaderboard=(ArrayList<Player>) application.getAttribute("leaderboard");
+                    @SuppressWarnings("unchecked")
+                    HashMap<String,Player> leaderList=(HashMap<String, Player>) application.getAttribute("leadermap");
+                    System.out.println(user.getFirstName()+user.getLastName());
+                    if(leaderList.containsKey(user.getFirstName()+user.getLastName()))
+                    {
+                        Player temp=leaderList.get(user.getFirstName()+user.getLastName());
+                        user.setChancesTaken(temp.getChancesTaken()+user.getChancesTaken());
+                        user.setScore(temp.getScore()+user.getScore());
+                        user.setWordsRevealed(temp.getWordsRevealed()+user.getWordsRevealed());
+                        leaderList.put(user.getFirstName()+user.getLastName(),user);
+                        leaderboard.remove(temp);
+                        leaderboard.add(user);
+                    }
+                    else
+                    {
+                        leaderList.put(user.getFirstName()+user.getLastName(),user);
+                        leaderboard.add(user);
+                    }
+                    Collections.sort(leaderboard, new Comparator<Player>()
+                    {
+                            public int compare(Player p1,Player p2)		
+                            {
+                               return p2.getScore()-p1.getScore();	
+                            }
+                    });
+                    if(leaderboard.size()>10)
+                    {
+                    	System.out.println("last value removed");
+                        leaderboard.remove(leaderboard.size()-1);
+                        application.setAttribute("leaderboard",leaderboard);
+                    }
+                    response.sendRedirect("HomeScreen.jsp#leaderboard");
+                    return;
+                }
+            }
+            current.setAttribute("Player",user);
+            response.sendRedirect("GameScreen.jsp");
+        }
+        else
+        {
+            if(user.getChancesTaken()<10)
+            {
+                user.setChancesTaken(user.getChancesTaken()+1);
+                current.setAttribute("Player", user);
                 response.sendRedirect("GameScreen.jsp");
-			}
-			else
-			{
-				user.calculateScore();
-				ServletContext application=request.getServletContext();
-				ArrayList<Player> leaderboard=(ArrayList<Player>)application.getAttribute("leaderboard");
-				HashMap<String,Player> leaderList=(HashMap<String, Player>) application.getAttribute("leadermap");
-				if(leaderList.containsKey(user.getFirstName()+user.getLastName()))
-				{
-					Player temp=leaderList.get(user.getFirstName()+user.getLastName());
-					user.setChancesTaken(temp.getChancesTaken()+user.getChancesTaken());
-					user.setScore(temp.getScore()+user.getScore());
-					user.setWordsRevealed(temp.getWordsRevealed()+user.getWordsRevealed());
-					leaderList.put(user.getFirstName()+user.getLastName(),user);
-					leaderboard.remove(temp);
-				}
-				else
-				{
-					leaderList.put(user.getFirstName()+user.getLastName(),user);
-					leaderboard.add(user);
-				}
-				Collections.sort(leaderboard, new Comparator<Player>()
-						{
-							public int compare(Player p1,Player p2)		
-							{
-								return p1.getScore()-p2.getScore();	
-							}
-						});
-				leaderboard.remove(leaderboard.size()-1);
-				application.setAttribute("leaderboard",leaderboard);
-                response.sendRedirect("../../HomeScreen.jsp");
-			}
-		}
-	}
-
+            }
+            else
+            {
+                response.sendRedirect("HomeScreen.jsp");
+            }
+        }
+    }
 }

@@ -76,7 +76,7 @@ public class Player
 		this.firstName=firstName;
 		this.lastName=lastName;
 		this.wordsRevealed=0;
-		this.chancesTaken=0;
+		this.chancesTaken=1;
 		this.difficulty="easy";
 		this.score=0;
     }

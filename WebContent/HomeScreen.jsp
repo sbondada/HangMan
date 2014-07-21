@@ -152,7 +152,7 @@
                     <th>Rank</th>
                     <th>FirstName</th>
                     <th>LastName</th>
-                    <th>Moves</th>
+                    <th>Wrong Moves</th>
                     <th>Score</th>
                 </tr>
             </thead>
