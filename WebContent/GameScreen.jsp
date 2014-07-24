@@ -30,6 +30,8 @@
 		Player curruser=(Player)current.getAttribute("Player");
 	%>
 
+		
+
     <%! 
 	private HashMap<Integer,String> statusmap=new HashMap<Integer,String>();
     public void jspInit()	
@@ -46,6 +48,15 @@
 		statusmap.put(9,"img/hanger/Hangman-6.png");	
 	}
     %>
+	<script type="text/javascript">
+	function validateForm() {
+	    var x = document.forms["guess"]["guessedletter"].value;
+	    if (x == null || x == "") {
+	        alert("Invalid Entry : Enter the guessed Letter");
+	        return false;
+	    }
+	}
+	</script>
 
     <div class="splash-container1">
 
@@ -73,7 +84,7 @@
 
             <div class="l-box pure-u-md-1-3 pure-u-lg-1-3">
                 <div class="is-center" >
-                    <form action="GameServlet" method="post">
+                    <form name="guess" action="GameServlet" onsubmit="return validateForm()" method="post">
                         <input name="guessedletter" type="text" style="font-size:150px; width:120px;color:#9a40bf; text-transform:uppercase;" onkeydown="if (event.keyCode == 13) document.getElementById('guess').click()">                                                                                           
                        	<p>
                        	</p>

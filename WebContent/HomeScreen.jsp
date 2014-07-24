@@ -100,10 +100,30 @@
         </div>
     </div>
 
+<script type="text/javascript">
+	function validateForm() {
+	    var x = document.forms["settings"]["firstname"].value;
+	    if (x == null || x == "") {
+	        alert("Invalid Entry :Please Enter First Name ");
+	        return false;
+	    }
+		x = document.forms["settings"]["lastname"].value;
+	    if (x == null || x == "") {
+	        alert("Invalid Entry : Please Enter Last Name");
+	        return false;
+	    }
+        x = document.forms["settings"]["difficulty"].value;
+	    if (x == null || x == "") {
+	        alert("Invalid Entry : Please Enter the difficulty level");
+	        return false;
+	    }
+	}
+	</script>
+
     <div class="content-wrapper" id="content-wrapper">
         <div class="content">
             <h2 class="content-head is-center"><i class="fa fa-cogs" style="font-size:40px">&nbsp;</i>Game-Setting</h2>
-         <form class="pure-form pure-form-stacked" action="GameServlet" method="get">                                                                                                              
+         <form  name="settings" class="pure-form pure-form-stacked" onsubmit="return validateForm()" action="GameServlet" method="get">                                                                                                              
             <div class="pure-g">
                 <div class="l-box pure-u-1 pure-u-lg-1-3">
 
