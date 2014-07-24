@@ -1,4 +1,4 @@
-HangMan
+![HangMan Logo](images/hangmanlogo.png)
 =======
 
 Hangman is a paper and pencil guessing game for two or more players. One player thinks of a word, phrase or sentence and the other tries to guess it by
@@ -70,10 +70,10 @@ I have used several tools like
 
 to construct the frontend.
 
-I Hope You would enjoy the Game and Customize for your sake. I would happy to know for any further improvements on the project.
+I Hope You would enjoy the Game and Customize for your sake. I would be happy to know for any further improvements on the project.
 
 ## Pending Tasks
 
 - [x] Tested For Accuracy.
-- [] Need to add Proper Finish Alerts.
-- [] Need to Deploy and Give a public IP.
+- [ ] Need to add Proper Finish Alerts.
+- [ ] Need to Deploy and Give a public IP.
